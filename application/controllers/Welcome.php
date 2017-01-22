@@ -23,8 +23,26 @@ class Welcome extends Application
 		$authors = array ();
 		foreach ($source as $record)
 		{
-			$authors[] = array ('who' => $record['who'], 'mug' => $record['mug'], 'href' => $record['where']);
+			$authors[] = array ('who' => $record['who'], 'mug' => $record['mug'], 'href' => $record['where'], 'what' => $record['what']);
 		}
+		$this->data['authors'] = $authors;
+
+		$this->render();
+	}
+        /**
+         * Test for a random generated quote at quotes.local/index.php/welcome/random
+         */
+        public function random()
+	{
+		// this is the view we want shown
+		$this->data['pagebody'] = 'homepage';
+
+		// build the list of authors, to pass on to our view
+		$source = $this->quotes->all();
+                $record = array_rand($source, 1);
+		$authors = array ();
+		$authors[] = array ('who' => $source[$record]['who'], 'mug' => $source[$record]['mug'], 'href' => $source[$record]['where'], 'what' => $source[$record]['what']);
+            
 		$this->data['authors'] = $authors;
 
 		$this->render();
